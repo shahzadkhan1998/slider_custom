@@ -128,14 +128,16 @@ class SliderView extends StatefulWidget {
   _SliderViewState createState() => _SliderViewState();
 }
 
-class _SliderViewState extends State<SliderView> with SingleTickerProviderStateMixin {
+class _SliderViewState extends State<SliderView>
+    with SingleTickerProviderStateMixin {
   int currentIndex = 0;
   late double dragOffset;
   late AnimationController _controller;
   late Animation<double> _animation;
 
-  Widget get leftImage =>
-      currentIndex == 0 ? widget.imageWidgets.last : widget.imageWidgets[currentIndex - 1];
+  Widget get leftImage => currentIndex == 0
+      ? widget.imageWidgets.last
+      : widget.imageWidgets[currentIndex - 1];
   Widget get centerImage => widget.imageWidgets[currentIndex];
   Widget get rightImage => currentIndex == widget.imageWidgets.length - 1
       ? widget.imageWidgets.first
@@ -191,8 +193,8 @@ class _SliderViewState extends State<SliderView> with SingleTickerProviderStateM
       }
     }
 
-    _animation = Tween<double>(begin: dragOffset, end: 0.0)
-        .animate(CurvedAnimation(parent: _controller, curve: widget.animationCurve));
+    _animation = Tween<double>(begin: dragOffset, end: 0.0).animate(
+        CurvedAnimation(parent: _controller, curve: widget.animationCurve));
     _controller.forward(from: 0.0);
   }
 
@@ -204,7 +206,8 @@ class _SliderViewState extends State<SliderView> with SingleTickerProviderStateM
 
   void _goToPrevious() {
     setState(() {
-      currentIndex = (currentIndex - 1 + widget.imageWidgets.length) % widget.imageWidgets.length;
+      currentIndex = (currentIndex - 1 + widget.imageWidgets.length) %
+          widget.imageWidgets.length;
       widget.onIndexChanged?.call(currentIndex);
     });
   }
@@ -228,9 +231,10 @@ class _SliderViewState extends State<SliderView> with SingleTickerProviderStateM
       return const Center(child: Text('No images provided'));
     }
 
-    if (widget.questions != null && widget.questions!.length != widget.imageWidgets.length) {
-    throw ArgumentError('Questions length must match imageWidgets length');
-  }
+    if (widget.questions != null &&
+        widget.questions!.length != widget.imageWidgets.length) {
+      throw ArgumentError('Questions length must match imageWidgets length');
+    }
 
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
@@ -238,16 +242,21 @@ class _SliderViewState extends State<SliderView> with SingleTickerProviderStateM
     final paddingScale = widget.paddingScale ?? screenWidth * 0.04;
     final fontScale = widget.fontScale ?? screenWidth * 0.04;
     final imageWidthScale = widget.imageWidthScale ?? screenWidth * 0.3;
-    final centerImageWidthScale = widget.centerImageWidthScale ?? screenWidth * 0.55;
-    final centerImageHeightScale = widget.centerImageHeightScale ?? screenHeight * 0.4;
+    final centerImageWidthScale =
+        widget.centerImageWidthScale ?? screenWidth * 0.55;
+    final centerImageHeightScale =
+        widget.centerImageHeightScale ?? screenHeight * 0.4;
     final buttonPaddingScale = widget.buttonPaddingScale ?? screenWidth * 0.04;
     final borderRadiusScale = widget.borderRadiusScale ?? screenWidth * 0.03;
-    final nextImageOffsetScale = widget.nextImageOffsetScale ?? screenWidth * 0.0450;
-    final nextImageWidthScale = widget.nextImageWidthScale ?? screenWidth * 0.3 * 0.8;
+    final nextImageOffsetScale =
+        widget.nextImageOffsetScale ?? screenWidth * 0.0450;
+    final nextImageWidthScale =
+        widget.nextImageWidthScale ?? screenWidth * 0.3 * 0.8;
 
     final nextToLeftTop = widget.nextToLeftTop ?? screenHeight * 0.11;
     final nextToLeftBottom = widget.nextToLeftBottom ?? screenHeight * 0.020;
-    final nextToLeftOffset = widget.nextToLeftOffset ?? nextImageOffsetScale * 0.11;
+    final nextToLeftOffset =
+        widget.nextToLeftOffset ?? nextImageOffsetScale * 0.11;
     final leftTop = widget.leftTop ?? screenHeight * 0.022;
     final leftBottom = widget.leftBottom ?? screenHeight * 0.040;
     final leftOffset = widget.leftOffset ?? paddingScale;
@@ -258,7 +267,8 @@ class _SliderViewState extends State<SliderView> with SingleTickerProviderStateM
     final rightOffset = widget.rightOffset ?? paddingScale;
     final nextToRightTop = widget.nextToRightTop ?? screenHeight * 0.11;
     final nextToRightBottom = widget.nextToRightBottom ?? screenHeight * 0.020;
-    final nextToRightOffset = widget.nextToRightOffset ?? nextImageOffsetScale * 0.14;
+    final nextToRightOffset =
+        widget.nextToRightOffset ?? nextImageOffsetScale * 0.14;
 
     return Scaffold(
       body: SafeArea(
@@ -266,7 +276,8 @@ class _SliderViewState extends State<SliderView> with SingleTickerProviderStateM
           focusNode: FocusNode(),
           onKey: (RawKeyEvent event) {
             if (event is RawKeyDownEvent) {
-              if (event.logicalKey == LogicalKeyboardKey.arrowLeft && currentIndex > 0) {
+              if (event.logicalKey == LogicalKeyboardKey.arrowLeft &&
+                  currentIndex > 0) {
                 _goToPrevious();
               } else if (event.logicalKey == LogicalKeyboardKey.arrowRight &&
                   currentIndex < widget.imageWidgets.length - 1) {
@@ -286,7 +297,8 @@ class _SliderViewState extends State<SliderView> with SingleTickerProviderStateM
               children: [
                 Expanded(
                   child: ClipRRect(
-                    borderRadius: BorderRadius.circular(borderRadiusScale * 1.5),
+                    borderRadius:
+                        BorderRadius.circular(borderRadiusScale * 1.5),
                     child: _buildCarouselView(
                       screenWidth: screenWidth,
                       screenHeight: screenHeight,
@@ -326,12 +338,16 @@ class _SliderViewState extends State<SliderView> with SingleTickerProviderStateM
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: widget.answerButtonBuilder!(currentIndex),
                   )
-                else if (widget.answerOptions != null && widget.answerOptions!.isNotEmpty)
+                else if (widget.answerOptions != null &&
+                    widget.answerOptions!.isNotEmpty)
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: (widget.answerOptions![currentIndex] as List<dynamic>).map((option) {
+                    children:
+                        (widget.answerOptions![currentIndex] as List<dynamic>)
+                            .map((option) {
                       return Padding(
-                        padding: EdgeInsets.symmetric(vertical: paddingScale * 0.12),
+                        padding:
+                            EdgeInsets.symmetric(vertical: paddingScale * 0.12),
                         child: ElevatedButton(
                           onPressed: () {
                             print('Selected: $option');
@@ -339,7 +355,8 @@ class _SliderViewState extends State<SliderView> with SingleTickerProviderStateM
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.white.withOpacity(0.2),
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(borderRadiusScale * 0.8),
+                              borderRadius: BorderRadius.circular(
+                                  borderRadiusScale * 0.8),
                             ),
                             padding: EdgeInsets.symmetric(
                               horizontal: buttonPaddingScale,
@@ -427,11 +444,14 @@ class _SliderViewState extends State<SliderView> with SingleTickerProviderStateM
                             double maxDrag = 150.0;
                             double defaultOpacity = 0.65;
                             double targetOpacity = 0.0;
-                            double dragFactor =
-                                (dragOffset > 0 ? dragOffset.abs() / maxDrag : 0.0).clamp(0.0, 1.0);
-                            double eased = widget.animationCurve.transform(dragFactor);
-                            final opacity =
-                                defaultOpacity + (targetOpacity - defaultOpacity) * eased;
+                            double dragFactor = (dragOffset > 0
+                                    ? dragOffset.abs() / maxDrag
+                                    : 0.0)
+                                .clamp(0.0, 1.0);
+                            double eased =
+                                widget.animationCurve.transform(dragFactor);
+                            final opacity = defaultOpacity +
+                                (targetOpacity - defaultOpacity) * eased;
 
                             return AnimatedOpacity(
                               opacity: opacity.clamp(0.0, 0.65),
@@ -470,8 +490,14 @@ class _SliderViewState extends State<SliderView> with SingleTickerProviderStateM
                         onTap: _goToNext,
                         child: TweenAnimationBuilder<double>(
                           tween: Tween<double>(
-                            begin: currentIndex == (widget.imageWidgets.length - 1) ? 0.8 : 1.0,
-                            end: currentIndex == (widget.imageWidgets.length - 1) ? 1.0 : 0.8,
+                            begin:
+                                currentIndex == (widget.imageWidgets.length - 1)
+                                    ? 0.8
+                                    : 1.0,
+                            end:
+                                currentIndex == (widget.imageWidgets.length - 1)
+                                    ? 1.0
+                                    : 0.8,
                           ),
                           duration: widget.animationDuration,
                           curve: widget.animationCurve,
@@ -479,11 +505,14 @@ class _SliderViewState extends State<SliderView> with SingleTickerProviderStateM
                             double maxDrag = 150.0;
                             double defaultOpacity = 0.65;
                             double targetOpacity = 0.0;
-                            double dragFactor =
-                                (dragOffset < 0 ? dragOffset.abs() / maxDrag : 0.0).clamp(0.0, 1.0);
-                            double eased = widget.animationCurve.transform(dragFactor);
-                            final opacity =
-                                defaultOpacity + (targetOpacity - defaultOpacity) * eased;
+                            double dragFactor = (dragOffset < 0
+                                    ? dragOffset.abs() / maxDrag
+                                    : 0.0)
+                                .clamp(0.0, 1.0);
+                            double eased =
+                                widget.animationCurve.transform(dragFactor);
+                            final opacity = defaultOpacity +
+                                (targetOpacity - defaultOpacity) * eased;
 
                             return AnimatedOpacity(
                               opacity: opacity.clamp(0.0, 0.65),
@@ -506,11 +535,10 @@ class _SliderViewState extends State<SliderView> with SingleTickerProviderStateM
                               ),
                             );
                           },
-                  ),
+                        ),
+                      ),
                     ),
-                    ),
-  
-                    
+
                   // Left image
                   if (currentIndex > 0)
                     AnimatedPositioned(
@@ -531,21 +559,31 @@ class _SliderViewState extends State<SliderView> with SingleTickerProviderStateM
                             double defaultBlur = 5.0;
                             double targetOpacity = 1.0;
                             double targetBlur = 0.0;
-                            double dragFactor =
-                                (dragOffset > 0 ? dragOffset.abs() / maxDrag : 0.0).clamp(0.0, 1.0);
-                            double eased = widget.animationCurve.transform(dragFactor);
-                            double translateX = dragOffset > 0 && currentIndex > 0
-                                ? ((screenWidth / 2 - centerImageWidthScale / 2) - leftOffset) *
-                                    eased
-                                : 0.0;
+                            double dragFactor = (dragOffset > 0
+                                    ? dragOffset.abs() / maxDrag
+                                    : 0.0)
+                                .clamp(0.0, 1.0);
+                            double eased =
+                                widget.animationCurve.transform(dragFactor);
+                            double translateX =
+                                dragOffset > 0 && currentIndex > 0
+                                    ? ((screenWidth / 2 -
+                                                centerImageWidthScale / 2) -
+                                            leftOffset) *
+                                        eased
+                                    : 0.0;
                             double width = dragOffset > 0 && currentIndex > 0
                                 ? imageWidthScale +
-                                    (centerImageWidthScale - imageWidthScale) * eased * 0.7
+                                    (centerImageWidthScale - imageWidthScale) *
+                                        eased *
+                                        0.7
                                 : imageWidthScale;
-                            double opacity =
-                                defaultOpacity + (targetOpacity - defaultOpacity) * eased;
-                            double blurSigma = defaultBlur - (defaultBlur - targetBlur) * eased;
-                            double angle = dragOffset > 0 ? -0.20 * (1 - eased) : -0.20;
+                            double opacity = defaultOpacity +
+                                (targetOpacity - defaultOpacity) * eased;
+                            double blurSigma = defaultBlur -
+                                (defaultBlur - targetBlur) * eased;
+                            double angle =
+                                dragOffset > 0 ? -0.20 * (1 - eased) : -0.20;
 
                             return Opacity(
                               opacity: opacity.clamp(0.65, 1.0),
@@ -558,8 +596,8 @@ class _SliderViewState extends State<SliderView> with SingleTickerProviderStateM
                                     child: SizedBox(
                                       width: width,
                                       child: ClipRRect(
-                                        borderRadius:
-                                            BorderRadius.circular(borderRadiusScale * 1.5),
+                                        borderRadius: BorderRadius.circular(
+                                            borderRadiusScale * 1.5),
                                         child: _buildImageBox(
                                           leftImage,
                                           fontScale,
@@ -598,23 +636,34 @@ class _SliderViewState extends State<SliderView> with SingleTickerProviderStateM
                             double defaultBlur = 5.0;
                             double targetOpacity = 1.0;
                             double targetBlur = 0.0;
-                            double dragFactor =
-                                (dragOffset < 0 ? dragOffset.abs() / maxDrag : 0.0).clamp(0.0, 1.0);
-                            double eased = widget.animationCurve.transform(dragFactor);
+                            double dragFactor = (dragOffset < 0
+                                    ? dragOffset.abs() / maxDrag
+                                    : 0.0)
+                                .clamp(0.0, 1.0);
+                            double eased =
+                                widget.animationCurve.transform(dragFactor);
                             double translateX = dragOffset < 0 &&
-                                    currentIndex < widget.imageWidgets.length - 1
-                                ? ((screenWidth / 2 - centerImageWidthScale / 2) - rightOffset) *
+                                    currentIndex <
+                                        widget.imageWidgets.length - 1
+                                ? ((screenWidth / 2 -
+                                            centerImageWidthScale / 2) -
+                                        rightOffset) *
                                     eased
                                 : 0.0;
-                            double width =
-                                dragOffset < 0 && currentIndex < widget.imageWidgets.length - 1
-                                    ? imageWidthScale +
-                                        (centerImageWidthScale - imageWidthScale) * eased * 0.7
-                                    : imageWidthScale;
-                            double opacity =
-                                defaultOpacity + (targetOpacity - defaultOpacity) * eased;
-                            double blurSigma = defaultBlur - (defaultBlur - targetBlur) * eased;
-                            double angle = dragOffset < 0 ? 0.25 * (1 - eased) : 0.25;
+                            double width = dragOffset < 0 &&
+                                    currentIndex <
+                                        widget.imageWidgets.length - 1
+                                ? imageWidthScale +
+                                    (centerImageWidthScale - imageWidthScale) *
+                                        eased *
+                                        0.7
+                                : imageWidthScale;
+                            double opacity = defaultOpacity +
+                                (targetOpacity - defaultOpacity) * eased;
+                            double blurSigma = defaultBlur -
+                                (defaultBlur - targetBlur) * eased;
+                            double angle =
+                                dragOffset < 0 ? 0.25 * (1 - eased) : 0.25;
 
                             return Opacity(
                               opacity: opacity.clamp(0.65, 1.0),
@@ -627,8 +676,8 @@ class _SliderViewState extends State<SliderView> with SingleTickerProviderStateM
                                     child: SizedBox(
                                       width: width,
                                       child: ClipRRect(
-                                        borderRadius:
-                                            BorderRadius.circular(borderRadiusScale * 1.5),
+                                        borderRadius: BorderRadius.circular(
+                                            borderRadiusScale * 1.5),
                                         child: _buildImageBox(
                                           rightImage,
                                           fontScale,
@@ -659,7 +708,8 @@ class _SliderViewState extends State<SliderView> with SingleTickerProviderStateM
                         key: ValueKey(currentIndex),
                         builder: (context, value, child) {
                           double maxDrag = 200.0;
-                          double dragFactor = (dragOffset.abs() / maxDrag).clamp(0.0, 1.0);
+                          double dragFactor =
+                              (dragOffset.abs() / maxDrag).clamp(0.0, 1.0);
                           double scale = 1.0 - (0.5 * dragFactor);
                           double opacity = 1.0 - (0.8 * dragFactor);
 
@@ -670,7 +720,9 @@ class _SliderViewState extends State<SliderView> with SingleTickerProviderStateM
                               child: Transform.translate(
                                 offset: Offset(dragOffset, 0),
                                 child: Transform.rotate(
-                                  angle: (dragOffset / maxDrag).clamp(-1.0, 1.0) * 0.15,
+                                  angle:
+                                      (dragOffset / maxDrag).clamp(-1.0, 1.0) *
+                                          0.15,
                                   child: child,
                                 ),
                               ),
@@ -683,11 +735,13 @@ class _SliderViewState extends State<SliderView> with SingleTickerProviderStateM
                             width: centerImageWidthScale,
                             height: centerImageHeightScale,
                             child: ClipRRect(
-                              borderRadius: BorderRadius.circular(borderRadiusScale * 1.5),
+                              borderRadius: BorderRadius.circular(
+                                  borderRadiusScale * 1.5),
                               child: Container(
                                 decoration: BoxDecoration(
                                   color: widget.primaryColor.withOpacity(0.8),
-                                  borderRadius: BorderRadius.circular(borderRadiusScale * 1.5),
+                                  borderRadius: BorderRadius.circular(
+                                      borderRadiusScale * 1.5),
                                   border: Border.all(
                                     color: widget.secondaryColor,
                                     width: screenWidth * 0.005,
@@ -704,30 +758,38 @@ class _SliderViewState extends State<SliderView> with SingleTickerProviderStateM
                                   fit: StackFit.expand,
                                   children: [
                                     Semantics(
-                                      label: 'Image ${currentIndex + 1} of ${widget.imageWidgets.length}',
+                                      label:
+                                          'Image ${currentIndex + 1} of ${widget.imageWidgets.length}',
                                       child: centerImage,
                                     ),
                                     if (widget.titleOne == null)
-                                      if (widget.questions != null && widget.questions!.isNotEmpty)
+                                      if (widget.questions != null &&
+                                          widget.questions!.isNotEmpty)
                                         Align(
                                           alignment: Alignment.bottomCenter,
                                           child: Container(
-                                            padding: EdgeInsets.all(paddingScale * 0.5),
+                                            padding: EdgeInsets.all(
+                                                paddingScale * 0.5),
                                             decoration: BoxDecoration(
-                                              color: widget.primaryColor.withOpacity(0.8),
+                                              color: widget.primaryColor
+                                                  .withOpacity(0.8),
                                               borderRadius:
-                                                  BorderRadius.circular(borderRadiusScale * 0.5),
+                                                  BorderRadius.circular(
+                                                      borderRadiusScale * 0.5),
                                             ),
                                             child: Text(
-                                              widget.questions![currentIndex].toString(),
+                                              widget.questions![currentIndex]
+                                                  .toString(),
                                               style: TextStyle(
                                                 color: Colors.white,
                                                 fontSize: fontScale * 0.9,
                                                 fontWeight: FontWeight.w500,
                                                 shadows: [
                                                   Shadow(
-                                                    blurRadius: paddingScale * 0.5,
-                                                    color: Colors.black.withOpacity(0.5),
+                                                    blurRadius:
+                                                        paddingScale * 0.5,
+                                                    color: Colors.black
+                                                        .withOpacity(0.5),
                                                     offset: Offset(2.0, 2.0),
                                                   ),
                                                 ],
@@ -741,12 +803,16 @@ class _SliderViewState extends State<SliderView> with SingleTickerProviderStateM
                                         alignment: Alignment.bottomCenter,
                                         child: Container(
                                           width: double.infinity,
-                                          padding: EdgeInsets.all(paddingScale * 0.8),
+                                          padding: EdgeInsets.all(
+                                              paddingScale * 0.8),
                                           decoration: BoxDecoration(
-                                            color: widget.primaryColor.withOpacity(0.8),
+                                            color: widget.primaryColor
+                                                .withOpacity(0.8),
                                             borderRadius: BorderRadius.only(
-                                              bottomLeft: Radius.circular(borderRadiusScale * 1.5),
-                                              bottomRight: Radius.circular(borderRadiusScale * 1.5),
+                                              bottomLeft: Radius.circular(
+                                                  borderRadiusScale * 1.5),
+                                              bottomRight: Radius.circular(
+                                                  borderRadiusScale * 1.5),
                                             ),
                                           ),
                                           child: Text(
@@ -757,8 +823,10 @@ class _SliderViewState extends State<SliderView> with SingleTickerProviderStateM
                                               fontWeight: FontWeight.w500,
                                               shadows: [
                                                 Shadow(
-                                                  blurRadius: paddingScale * 0.5,
-                                                  color: Colors.black.withOpacity(0.5),
+                                                  blurRadius:
+                                                      paddingScale * 0.5,
+                                                  color: Colors.black
+                                                      .withOpacity(0.5),
                                                   offset: Offset(2.0, 2.0),
                                                 ),
                                               ],
@@ -772,12 +840,16 @@ class _SliderViewState extends State<SliderView> with SingleTickerProviderStateM
                                         alignment: Alignment.topCenter,
                                         child: Container(
                                           width: double.infinity,
-                                          padding: EdgeInsets.all(paddingScale * 0.8),
+                                          padding: EdgeInsets.all(
+                                              paddingScale * 0.8),
                                           decoration: BoxDecoration(
-                                            color: widget.primaryColor.withOpacity(0.8),
+                                            color: widget.primaryColor
+                                                .withOpacity(0.8),
                                             borderRadius: BorderRadius.only(
-                                              topLeft: Radius.circular(borderRadiusScale * 1.5),
-                                              topRight: Radius.circular(borderRadiusScale * 1.5),
+                                              topLeft: Radius.circular(
+                                                  borderRadiusScale * 1.5),
+                                              topRight: Radius.circular(
+                                                  borderRadiusScale * 1.5),
                                             ),
                                           ),
                                           child: Text(
@@ -788,8 +860,10 @@ class _SliderViewState extends State<SliderView> with SingleTickerProviderStateM
                                               fontWeight: FontWeight.w600,
                                               shadows: [
                                                 Shadow(
-                                                  blurRadius: paddingScale * 0.5,
-                                                  color: Colors.black.withOpacity(0.5),
+                                                  blurRadius:
+                                                      paddingScale * 0.5,
+                                                  color: Colors.black
+                                                      .withOpacity(0.5),
                                                   offset: Offset(2.0, 2.0),
                                                 ),
                                               ],
@@ -824,7 +898,8 @@ class _SliderViewState extends State<SliderView> with SingleTickerProviderStateM
                     ),
 
                   // Forward arrow
-                  if (widget.arrowShow && currentIndex < widget.imageWidgets.length - 1)
+                  if (widget.arrowShow &&
+                      currentIndex < widget.imageWidgets.length - 1)
                     Positioned(
                       right: screenWidth * 0.018,
                       top: screenHeight * 0.15,
@@ -846,8 +921,8 @@ class _SliderViewState extends State<SliderView> with SingleTickerProviderStateM
     );
   }
 
-  Widget _buildImageBox(
-      Widget image, double fontScale, double borderRadius, double padding, double blurSigma) {
+  Widget _buildImageBox(Widget image, double fontScale, double borderRadius,
+      double padding, double blurSigma) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(borderRadius),
       child: Container(

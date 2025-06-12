@@ -1,10 +1,11 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter/material.dart';
-import 'package:slider_slider/src/slider_view.dart';
+import 'package:slider_custom/src/slider_view.dart';
 
 void main() {
-  testWidgets('SliderView renders correctly with images', (WidgetTester tester) async {
+  testWidgets('SliderView renders correctly with images',
+      (WidgetTester tester) async {
     await tester.pumpWidget(
       MaterialApp(
         home: SliderView(
@@ -25,7 +26,8 @@ void main() {
     expect(find.text('No images provided'), findsNothing);
   });
 
-  testWidgets('SliderView shows empty message when no images provided', (WidgetTester tester) async {
+  testWidgets('SliderView shows empty message when no images provided',
+      (WidgetTester tester) async {
     await tester.pumpWidget(
       const MaterialApp(
         home: SliderView(imageWidgets: []),
@@ -35,7 +37,8 @@ void main() {
     expect(find.text('No images provided'), findsOneWidget);
   });
 
-  testWidgets('SliderView navigates with keyboard', (WidgetTester tester) async {
+  testWidgets('SliderView navigates with keyboard',
+      (WidgetTester tester) async {
     await tester.pumpWidget(
       MaterialApp(
         home: SliderView(

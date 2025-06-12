@@ -1,4 +1,4 @@
-name: slider_slider
+name: slider_custom
 description: A customizable Flutter carousel slider with drag gestures, custom image widgets, and optional questions/answers.
 version: 1.0.0
 homepage: https://github.com/shahzadkhan1998/slider_custom
